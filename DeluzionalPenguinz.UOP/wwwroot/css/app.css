@@ -1,0 +1,276 @@
+﻿
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Display:wght@100;300;400;500;600;700&display=swap');
+
+
+
+:root {
+    --fontSizeh0: 24px;
+    font-family: 'Noto Sans Display', sans-serif;
+    /* Purple color variables */
+    --purple100: #d8d5db;
+    --purple200: #d7d1df;
+    --purple300: #d7cde3;
+    --purple400: #d7cae6;
+    --purple500: #d6c6ea;
+    --purple600: #d6c2ee;
+    --purple700: #d6bef2;
+    --purple800: #d5baf6;
+    --purple900: #d5b6fa;
+    /* Purple #2 color variables */
+    --purple2100: #ba88f7;
+    --purple2200: #9f58f4;
+    --purple2300: #8328f0;
+    --purple2400: #6a0fd7;
+    --purple2500: #520ba7;
+    --purple2600: #3b0877;
+    --purple2700: #230548;
+    --purple2800: #0c0218;
+    /* darkPurple #2 color variables */
+    --darkPurple2100: #e5e6f1;
+    --darkPurple2200: #c4c7de;
+    --darkPurple2300: #a3a7cc;
+    --darkPurple2400: #8288ba;
+    --darkPurple2500: #6168a8;
+    --darkPurple2600: #4c528a;
+    --darkPurple2700: #282b48;
+    --darkPurple2800: #161828;
+    --darkPurple2900: #040407;
+    /* darkPurple color variables */
+    --darkPurple100: #494b58;
+    --darkPurple200: #414460;
+    --darkPurple300: #393e68;
+    --darkPurple400: #313870;
+    --darkPurple500: #293178;
+    --darkPurple600: #212b80;
+    --darkPurple700: #192588;
+    --darkPurple800: #111e90;
+    --darkPurple900: #091898;
+    /* Blue color variables */
+    --blue100: #8f95a0;
+    --blue200: #8592aa;
+    --blue300: #7b8fb4;
+    --blue400: #708cbf;
+    --blue500: #6688c9;
+    --blue600: #5b85d4;
+    --blue700: #5182de;
+    --blue800: #477fe8;
+    --blue900: #3c7cf3;
+    --blue1000: #3279fd;
+    /* Blue #2 color variables */
+    --blue2100: #f8f8f8;
+    --blue2200: #d0ddf6;
+    --blue2300: #a5beee;
+    --blue2400: #7aa0e6;
+    --blue2500: #2863d2;
+    --blue2600: #204fa7;
+    --blue2700: #183b7c;
+    --blue2800: #0f2651;
+    --blue2900: #5c86d3;
+    --background-color: #ECE6F3;
+}
+
+.login {
+    text-align: center;
+    color: var(--purple2800);
+}
+
+
+.lds-ellipsis {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+    .lds-ellipsis div {
+        position: absolute;
+        top: 33px;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: #161828;
+        animation-timing-function: cubic-bezier(0, 1, 1, 0);
+    }
+
+        .lds-ellipsis div:nth-child(1) {
+            left: 8px;
+            animation: lds-ellipsis1 0.6s infinite;
+        }
+
+        .lds-ellipsis div:nth-child(2) {
+            left: 8px;
+            animation: lds-ellipsis2 0.6s infinite;
+        }
+
+        .lds-ellipsis div:nth-child(3) {
+            left: 32px;
+            animation: lds-ellipsis2 0.6s infinite;
+        }
+
+        .lds-ellipsis div:nth-child(4) {
+            left: 56px;
+            animation: lds-ellipsis3 0.6s infinite;
+        }
+
+@keyframes lds-ellipsis1 {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes lds-ellipsis3 {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(0);
+    }
+}
+
+@keyframes lds-ellipsis2 {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(24px, 0);
+    }
+}
+
+#app, body, html, .loadingParent {
+    width: 100%;
+    height: 100%;
+}
+
+.loadingParent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: wait;
+    color: var(--darkPurple200);
+    justify-content: center;
+}
+
+    .loadingParent > p {
+        color: var(--darkPurple200);
+        text-align: center;
+        width: 400px;
+        
+        font-size: 24px;
+        margin-bottom: 32px;
+        font-weight: bold;
+    }
+
+
+#loaderText {
+    font-size: 18px;
+    margin-bottom: -24px;
+    font-weight: lighter;
+}
+
+#loader {
+
+    width: 0;
+    height: 32px;
+    border-radius: 10px;
+    background: var(--purple2100);
+}
+
+.loaderParent
+{
+    width:400px;
+    height:32px;
+    border:2px solid var(--darkPurple100);
+    border-radius:10px;
+}
+
+
+::selection {
+    color: var(--blue2100);
+    background: var(--purple2100);
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(--blue2100);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--darkPurple2400);
+}
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+
+
+input {
+    padding: 8px 4px;
+    border: 0;
+    border-radius: 4px;
+    user-select: text;
+    outline: 0;
+    width: 95%;
+}
+
+
+
+label > p {
+    align-self: start;
+    margin-bottom: 8px;
+    user-select: none;
+}
+
+
+input:focus {
+    outline: 1px solid var(--darkPurple2300);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 64px;
+    background-color: var(--darkPurple200);
+}
+
+    .header::before {
+        content: "DeluzionalPenguinz";
+        position: absolute;
+        justify-self: center;
+        align-self: center;
+        z-index: 3;
+        margin-top: 12px;
+        margin-left: 520px;
+        font-size: 14px;
+        color: var(--purple200);
+    }
+
+
+.header__title {
+    color: var(--blue2100);
+    font-size: 32px;
+    user-select: none;
+    margin-left: -64px;
+    width: auto;
+}

@@ -1,0 +1,164 @@
+﻿@page "/"
+
+
+
+<PageTitle>Σύνδεση/Εγγραφή Τμήμα Ψηφιακών Συστημάτων Σπάρτης v.DeluzionalPenguinz</PageTitle>
+<div class="cardContainer">
+    <div class="card @rotatedClass">
+        <div class="card_content">
+
+            <div class="card_front">
+
+                <EditForm Model="UserToLogin" class="login-box"  OnValidSubmit="HandleLogin">
+                    <DataAnnotationsValidator />
+                    <p id="login-title">Σύνδεση</p>
+                    <label>
+
+                        <p>Όνομα Χρήστη</p>
+                        <InputText id="username" @bind-Value="UserToLogin.Username"  autofill="username" autocomplete="username" />
+                        <ValidationMessage For="()=>UserToLogin.Username" />
+                    </label>
+
+                    <label>
+                        <p>
+                            Κωδικός
+                        </p>
+                        <InputText id="password" type="password" @bind-Value="UserToLogin.Password" />
+                        <ValidationMessage For="()=>UserToLogin.Password" />
+                    </label>
+
+
+                    <button type="submit" id="sign-in" class="btn btn-primary">Είσοδος</button>
+
+                    <a @onclick="Rotate" id="create-login-account">Δεν έχεις λογαριασμό?</a>
+
+                </EditForm>
+
+
+            </div>
+
+            <div class="card__back">
+                <EditForm  class="login-box-register" EditContext="@editContext" OnSubmit="HandleRegister">
+                    <DataAnnotationsValidator />
+                     <div class="registerHeadersContainer">
+                        @if(isUserInfoFrameVisible || isPasswordFrameVisible)
+                        {
+                         <img class="backImg" src="images/back.png" width="6" height="12" @onclick="GoToPreviousFrame" />
+                        }
+
+                        <div class="registerHeader @isWhoIsItFrameActive">
+                            <img  src="images/whatareyou.png"  width="22" height="21"  />
+                        </div>
+                         @if (UserToRegister.HumanType == Models.Identity.HumanType.Professor)
+                        {
+                              <div class="registerHeader @isUserInfoFrameActive">
+                                    <img  src="images/teacher.png"  width="22" height="21"  />
+                                </div>
+                        }
+                        else if (UserToRegister.HumanType == Models.Identity.HumanType.Student)
+                        {
+                            <div class="registerHeader @isUserInfoFrameActive">
+                                <img  src="images/student.png"  width="22" height="21"  />
+                            </div>
+                        }
+                        <div class="registerHeader @isPasswordFrameActive">
+                            <img src="images/whatareyou.png"  width="22" height="21"/>
+                        </div>
+                    </div>
+                    <p id="login-title-register">Εγγραφή</p>
+                   
+                    @if (isWhoIsItFrameVisible)
+                    {
+                       
+
+                        <label >
+                            <p class="whatareyou">Τι Είσαι?</p>
+                            <InputSelect @bind-Value="UserToRegister.HumanType" >
+                                <option value="@HumanType.Student">Μαθητής</option>
+                                <option value="@HumanType.Professor">Δάσκαλος</option>
+                            </InputSelect>
+                             <ValidationMessage For="()=>UserToRegister.HumanType" />
+                        </label>
+                        @if (UserToRegister.HumanType == Models.Identity.HumanType.Student)
+                        {
+
+                            <label>
+                                <p>ΑΜ</p>
+                                <InputText @bind-Value="UserToRegister.AM" />
+                            </label>
+
+                        }
+
+                        <button @onclick="GoToNextFrame" class="btn btn-primary sign-in-register">Επόμενο Βήμα</button>
+
+                        <a @onclick="Rotate" id="create-login-account-register">Έχεις τελικά λογαριασμό?</a>
+
+                    }
+                    else if (isUserInfoFrameVisible)
+                    {
+
+
+                        <label>
+                            <p>Email</p>
+
+                            <InputText @bind-Value="UserToRegister.Email" autofill="email"  autocomplete="email" />
+                              <ValidationMessage  For="()=>UserToRegister.Email" />
+                        </label>
+
+                        <label>
+                            <p>First Name</p>
+
+                            <InputText @bind-Value="UserToRegister.FirstName" autocomplete="given-name" autofill="given-name"  />
+                              <ValidationMessage  For="()=>UserToRegister.FirstName" />
+                        </label>
+
+                        <label>
+                            <p>Last Name</p>
+
+                            <InputText @bind-Value="UserToRegister.LastName" autocomplete="family-name" autofill="family-name" />
+                               <ValidationMessage  For="()=>UserToRegister.LastName" />
+                        </label>
+
+
+
+                        <button @onclick="GoToNextFrame" class="btn btn-primary sign-in-register">Επόμενο Βήμα</button>
+
+
+                    }
+                    else if (isPasswordFrameVisible)
+                    {
+
+                        <label>
+                            <p>Username</p>
+
+                            <InputText @bind-Value="UserToRegister.Username"  autofill="username" />
+                             <ValidationMessage For="()=>UserToRegister.Username" />
+                        </label>
+
+                        <label>
+                            <p>Password</p>
+
+                            <InputText type="password" @bind-Value="UserToRegister.Password" />
+                             <ValidationMessage  For="()=>UserToRegister.Password" />
+                        </label>
+
+                        <label>
+                            <p>Confirm Password</p>
+
+                            <InputText type="password" @bind-Value="UserToRegister.ConfirmPassword" />
+                             <ValidationMessage For="()=>UserToRegister.ConfirmPassword" />
+                        </label>
+                        <button type="submit" class="btn btn-primary sign-in-register">Εγγράψου</button>
+
+                    }
+
+                </EditForm>
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+</div>
