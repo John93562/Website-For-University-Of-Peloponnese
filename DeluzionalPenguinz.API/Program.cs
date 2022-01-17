@@ -16,6 +16,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
 builder.Services.AddScoped<AnouncementsRepository>();
 builder.Services.AddScoped<AnouncementsDataService>();
+
+builder.Services.AddScoped<CourseDataService>();
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
  {
    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -53,8 +56,8 @@ builder.Services.AddCors(
               options => options.AddPolicy("DeluzionalPenguinz", builder =>
               {
                   //builder.SetIsOriginAllowed(e => e == "https://deluzionalpenguinz.com").AllowAnyMethod().AllowAnyHeader();
-                  //builder.WithOrigins("deluzionalpenguinz.com", "https://deluzionalpenguinz.com", "https://deluzionalpenguinz.com/").AllowAnyMethod().AllowAnyHeader();
-                 builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                  builder.WithOrigins("deluzionalpenguinz.com", "https://deluzionalpenguinz.com", "https://deluzionalpenguinz.com/").AllowAnyMethod().AllowAnyHeader();
+                  //builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
               }));
 
 

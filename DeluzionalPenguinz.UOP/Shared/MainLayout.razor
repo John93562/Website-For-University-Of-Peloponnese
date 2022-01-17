@@ -1,8 +1,51 @@
-﻿@inherits LayoutComponentBase
-
+﻿@using Blazored.LocalStorage
+@inherits LayoutComponentBase
+@inject IJSRuntime JSRuntime
+@inject ILocalStorageService LocalStorage
+@inject AuthenticationStateProvider AuthStateProvider
 
 
 <div class="header">
-        <p class="header__title">Τμήμα Ψηφιακών Συστημάτων</p>
+    <p class="header__title">Τμήμα Ψηφιακών Συστημάτων</p>
+    <AuthorizeView>
+        <Authorized>
+
+            <div class="menu">
+                @if (!MenuIsOpen)
+                {
+                    <img src="images/menu.png" @onclick="ToggleMenu" width="40" height="32" />
+                }
+                else
+                {
+                    <img src="images/menu_open.png" @onclick="ToggleMenu" width="40" height="32" />
+                }
+
+                <div class="menuPopup" id="menuPopupId">
+                    <div class="human__identity">
+
+                        <img src="images/user.png" width="26" height="26" />
+                        <p>@HumanFullName</p>
+                    </div>
+                    <div @onclick="NavigateToAllAnouncements">
+                        <p>Αρχική</p>
+                    </div>
+                    @if (isProfessor)
+                    {
+                        <div @onclick="NavigateToProfessorsAnouncements">
+                            <p>Οι Ανακοινώσεις μου</p>
+                        </div>
+                    }
+                    <div @onclick="Logout">
+                        <p>Αποσύνδεση</p>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </Authorized>
+    </AuthorizeView>
+
 </div>
 @Body
+

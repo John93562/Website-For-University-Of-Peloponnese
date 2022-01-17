@@ -37,6 +37,7 @@ namespace DeluzionalPenguinz.UOP.Services
                 status = await result.Content.ReadFromJsonAsync<JwtResponse>();
                 await localStorage.SetItemAsync("Token", status.Token);
                 await authStateProvider.GetAuthenticationStateAsync();
+
             }
 
             return status;

@@ -3,19 +3,36 @@
 
 
 <PageTitle>Σύνδεση/Εγγραφή Τμήμα Ψηφιακών Συστημάτων Σπάρτης v.DeluzionalPenguinz</PageTitle>
+
+  @if (IsLoading)
+{
+    <div class="ellipsis-container">
+
+
+        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+    </div>
+}
 <div class="cardContainer">
     <div class="card @rotatedClass">
         <div class="card_content">
 
             <div class="card_front">
 
-                <EditForm Model="UserToLogin" class="login-box"  OnValidSubmit="HandleLogin">
+                <EditForm Model="UserToLogin" class="login-box" OnValidSubmit="HandleLogin">
+                    @if (LoginFailed)
+                    {
+                        <div class="failedTextContainer"><p class="failedText">Η Σύνδεση Απέτυχε. Μήπως έβαλες τα στοιχεία σου λάθος? Μήπως δεν έχεις κάνει Εγγραφή? Μήπως ανατυνάχτηκε το Server? Ποιός ξέρει..</p></div>
+                    }
+                    @if (RegisterSucceed)
+                    {
+                        <div class="failedTextContainer"><p class="failedText">Η Εγγραφή έγινε με επιτυχία. Μπορείς να συνδεθείς με τα στοιχεία που εγγράφτηκες.</p></div>
+                    }
                     <DataAnnotationsValidator />
                     <p id="login-title">Σύνδεση</p>
                     <label>
 
                         <p>Όνομα Χρήστη</p>
-                        <InputText id="username" @bind-Value="UserToLogin.Username"  autofill="username" autocomplete="username" />
+                        <InputText id="username" @bind-Value="UserToLogin.Username" autofill="username" autocomplete="username" />
                         <ValidationMessage For="()=>UserToLogin.Username" />
                     </label>
 
@@ -30,6 +47,10 @@
 
                     <button type="submit" id="sign-in" class="btn btn-primary">Είσοδος</button>
 
+
+
+
+
                     <a @onclick="Rotate" id="create-login-account">Δεν έχεις λογαριασμό?</a>
 
                 </EditForm>
@@ -38,46 +59,51 @@
             </div>
 
             <div class="card__back">
-                <EditForm  class="login-box-register" EditContext="@editContext" OnSubmit="HandleRegister">
+                <EditForm class="login-box-register" EditContext="@editContext" OnSubmit="HandleRegister">
                     <DataAnnotationsValidator />
-                     <div class="registerHeadersContainer">
-                        @if(isUserInfoFrameVisible || isPasswordFrameVisible)
+                    @if (RegisterFailed)
+                    {
+                        <div class="failedTextContainer registerfailexText"><p class="failedText">Η Εγγραφή Απέτυχε. Μήπως έβαλες τα στοιχεία σου λάθος? Μήπως ανατυνάχτηκε το Server? Ποιός ξέρει..</p></div>
+                    }
+
+                    <div class="registerHeadersContainer">
+                        @if (isUserInfoFrameVisible || isPasswordFrameVisible)
                         {
-                         <img class="backImg" src="images/back.png" width="6" height="12" @onclick="GoToPreviousFrame" />
+                            <img class="backImg" src="images/back.png" width="6" height="12" @onclick="GoToPreviousFrame" />
                         }
 
                         <div class="registerHeader @isWhoIsItFrameActive">
-                            <img  src="images/whatareyou.png"  width="22" height="21"  />
+                            <img src="images/whatareyou.png" width="22" height="21" />
                         </div>
-                         @if (UserToRegister.HumanType == Models.Identity.HumanType.Professor)
+                        @if (UserToRegister.HumanType == Models.Identity.HumanType.Professor)
                         {
-                              <div class="registerHeader @isUserInfoFrameActive">
-                                    <img  src="images/teacher.png"  width="22" height="21"  />
-                                </div>
+                            <div class="registerHeader @isUserInfoFrameActive">
+                                <img src="images/teacher.png" width="22" height="21" />
+                            </div>
                         }
                         else if (UserToRegister.HumanType == Models.Identity.HumanType.Student)
                         {
                             <div class="registerHeader @isUserInfoFrameActive">
-                                <img  src="images/student.png"  width="22" height="21"  />
+                                <img src="images/student.png" width="22" height="21" />
                             </div>
                         }
                         <div class="registerHeader @isPasswordFrameActive">
-                            <img src="images/whatareyou.png"  width="22" height="21"/>
+                            <img src="images/whatareyou.png" width="22" height="21" />
                         </div>
                     </div>
                     <p id="login-title-register">Εγγραφή</p>
-                   
+
                     @if (isWhoIsItFrameVisible)
                     {
-                       
 
-                        <label >
+
+                        <label>
                             <p class="whatareyou">Τι Είσαι?</p>
-                            <InputSelect @bind-Value="UserToRegister.HumanType" >
+                            <InputSelect @bind-Value="UserToRegister.HumanType">
                                 <option value="@HumanType.Student">Μαθητής</option>
                                 <option value="@HumanType.Professor">Δάσκαλος</option>
                             </InputSelect>
-                             <ValidationMessage For="()=>UserToRegister.HumanType" />
+                            <ValidationMessage For="()=>UserToRegister.HumanType" />
                         </label>
                         @if (UserToRegister.HumanType == Models.Identity.HumanType.Student)
                         {
@@ -101,22 +127,22 @@
                         <label>
                             <p>Email</p>
 
-                            <InputText @bind-Value="UserToRegister.Email" autofill="email"  autocomplete="email" />
-                              <ValidationMessage  For="()=>UserToRegister.Email" />
+                            <InputText @bind-Value="UserToRegister.Email" autofill="email" autocomplete="email" />
+                            <ValidationMessage For="()=>UserToRegister.Email" />
                         </label>
 
                         <label>
                             <p>First Name</p>
 
-                            <InputText @bind-Value="UserToRegister.FirstName" autocomplete="given-name" autofill="given-name"  />
-                              <ValidationMessage  For="()=>UserToRegister.FirstName" />
+                            <InputText @bind-Value="UserToRegister.FirstName" autocomplete="given-name" autofill="given-name" />
+                            <ValidationMessage For="()=>UserToRegister.FirstName" />
                         </label>
 
                         <label>
                             <p>Last Name</p>
 
                             <InputText @bind-Value="UserToRegister.LastName" autocomplete="family-name" autofill="family-name" />
-                               <ValidationMessage  For="()=>UserToRegister.LastName" />
+                            <ValidationMessage For="()=>UserToRegister.LastName" />
                         </label>
 
 
@@ -131,28 +157,32 @@
                         <label>
                             <p>Username</p>
 
-                            <InputText @bind-Value="UserToRegister.Username"  autofill="username" />
-                             <ValidationMessage For="()=>UserToRegister.Username" />
+                            <InputText @bind-Value="UserToRegister.Username" autofill="username" />
+                            <ValidationMessage For="()=>UserToRegister.Username" />
                         </label>
 
                         <label>
                             <p>Password</p>
 
                             <InputText type="password" @bind-Value="UserToRegister.Password" />
-                             <ValidationMessage  For="()=>UserToRegister.Password" />
+                            <ValidationMessage For="()=>UserToRegister.Password" />
                         </label>
 
                         <label>
                             <p>Confirm Password</p>
 
                             <InputText type="password" @bind-Value="UserToRegister.ConfirmPassword" />
-                             <ValidationMessage For="()=>UserToRegister.ConfirmPassword" />
+                            <ValidationMessage For="()=>UserToRegister.ConfirmPassword" />
                         </label>
                         <button type="submit" class="btn btn-primary sign-in-register">Εγγράψου</button>
+
+
 
                     }
 
                 </EditForm>
+
+
             </div>
 
 

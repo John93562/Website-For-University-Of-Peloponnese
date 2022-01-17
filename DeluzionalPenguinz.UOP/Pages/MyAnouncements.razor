@@ -1,0 +1,61 @@
+﻿@page "/MyAnouncements"
+@inject AnouncementsService AnouncementsService
+
+
+<div class="myAnouncements__header">
+    <div class="backBtn" @onclick="NavigateToAllAnouncements">
+        <img src="images/back.png"  width="6" height="12" />
+        <p>Πίσω</p>
+    </div>
+
+    <p>@FullProfessorName</p>
+
+
+</div>
+
+<div class="myAnouncements__main-content">
+    <div class="myAnouncements_main-content--header">
+
+        <div class="newAnouncement"  @onclick="AddNewAnouncement">
+            <p>Γράψε Καινούργια Ανακοίνωση</p>
+            <img src="images/add.png" width="16" height="16" />
+
+        </div>
+
+    </div>
+    <div class="myAnouncements_main--content--main">
+        @if (isLoading)
+        {
+            <div class="ellipsis-container">
+                <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+            </div>
+        }
+
+        @foreach (AnouncementDTO anouncement in ProfessorsAnouncements)
+        {
+            <div class="myAnouncements__Anouncement">
+                <div class="myAnouncement__Anouncement--Header">
+                    <p  @onclick="()=> GoToAnouncement(anouncement.Id,anouncement.Title)">@anouncement.Title</p>
+                    <div class="myAnouncements__EditAnouncement">
+                        <div class="editAnouncement"  @onclick="()=> EditAnouncement(anouncement.Id,anouncement.Title)">
+                            <p>Επεξεργασία</p>
+
+                        </div>
+                        <div class="deleteAnouncement" @onclick="()=> DeleteAnouncement(anouncement.Id)">
+                            <img src="images/delete.png" width="12" height="14" />
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="myAnouncement__Anouncement--Body">
+                    <p>@anouncement.Course.Name</p>
+                    <p>@anouncement.Date.ToString("G")</p>
+
+                </div>
+
+            </div>
+
+        }
+    </div>
+</div>

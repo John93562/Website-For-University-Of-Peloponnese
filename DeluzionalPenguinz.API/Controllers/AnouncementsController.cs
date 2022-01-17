@@ -19,7 +19,13 @@ namespace DeluzionalPenguinz.API.Controllers
         {
             this.anouncementsDataService = anouncementsDataService;
         }
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetSingleAnouncement(int id)
+        {
+           AnouncementDTO response = await anouncementsDataService.GetSingleAnouncement(id);
 
+            return response is null ? BadRequest() : Ok(response);
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAnouncements()
@@ -29,14 +35,14 @@ namespace DeluzionalPenguinz.API.Controllers
             return response is null ? BadRequest() : Ok(response);
         }
         [HttpPost]
-        public async Task<IActionResult> AddNewAnouncement([FromBody] AnouncementDTO anouncement)
+        public async Task<IActionResult> AddNewAnouncement([FromBody] CreateNewAnouncementResponse anouncement)
         {
             BooleanResponse response = await anouncementsDataService.AddNewAnouncement(anouncement);
 
             return response is null ? BadRequest() : Ok(response);
         }
         [HttpPut]
-        public async Task<IActionResult> UpdateAnAnouncement([FromBody] AnouncementDTO anouncement)
+        public async Task<IActionResult> UpdateAnAnouncement([FromBody] UpdateAnouncementResponse anouncement)
         {
             BooleanResponse response = await anouncementsDataService.UpdateAnAnouncement(anouncement);
 

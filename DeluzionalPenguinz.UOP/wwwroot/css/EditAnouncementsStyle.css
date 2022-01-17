@@ -1,0 +1,128 @@
+﻿.myAnouncements__header
+{
+    padding:32px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+
+.myAnouncements__main-content
+{
+    padding:64px;
+}
+
+
+.myAnouncements_main-content--header
+{
+    display:flex;
+    align-items:start;
+    justify-content:start;
+    width:100%;
+    justify-content:center;
+}
+    .myAnouncements_main-content--header div {
+        background: #CEAAF9;
+        padding: 16px;
+        border-radius: 4px;
+        cursor:pointer;
+        gap: 12px;
+        display: flex;
+    }
+
+    .myAnouncements_main-content--header div:hover {
+        background: #CEAAF9;
+        padding: 16px;
+        border-radius: 4px;
+        gap: 12px;
+        display: flex;
+    }
+
+
+    .TimeCombobox {
+    }
+
+
+.newAnouncement
+{
+
+}
+
+.myAnouncements_main--content--main
+{
+    margin-top:24px;
+    background:var(--purple100);
+   display:flex;
+    flex-direction:column;
+    gap:24px;
+    padding:24px;
+}
+
+
+
+.myAnouncements__Anouncement
+{
+    background:var(--darkPurple300);
+    color:var(--blue2100);
+    padding:16px;
+}
+    .myAnouncements__Anouncement p
+    {
+        cursor:pointer;
+        width:auto;
+
+    }
+
+
+
+    .myAnouncement__Anouncement--Header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+
+
+
+
+.myAnouncements__EditAnouncement
+{
+    display:flex;
+    gap:24px;
+
+}
+
+
+
+
+.editAnouncement {
+    background: #F3F9AA;
+    border-radius: 4px;
+    padding: 8px;
+    cursor: pointer;
+    color:var(--darkPurple2700);
+}
+
+
+
+
+.deleteAnouncement {
+    background: #F9AAAA;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 8px;
+}
+
+
+
+
+
+.myAnouncement__Anouncement--Body
+{
+
+}
+
+
+
+
+
+

@@ -115,7 +115,7 @@ namespace DeluzionalPenguinz.API.Services
             {
                 return null;
             }
-            Human identityUser = new Human(user.FirstName, user.LastName, user.AM, user.Username.ToLower(), user.HumanType, new List<Anouncement>()) ;
+            Human identityUser = new Human(user.FirstName, user.LastName, user.AM, user.Username.ToLower(), user.HumanType) ;
 
             var res = await userManager.CreateAsync(identityUser, user.Password);
             
@@ -134,13 +134,10 @@ namespace DeluzionalPenguinz.API.Services
         async Task<string> CreateToken(Human user)
         {
             List<Claim> allClaims = await GetClaims(user);
-          
-          
 
             var SecretToken = configuration.GetSection("AppSettings")["Token"];
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretToken));
-
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
@@ -152,24 +149,17 @@ namespace DeluzionalPenguinz.API.Services
 
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
-
             return jwt;
             //var tokenHandler = new JwtSecurityTokenHandler();
-
             //var tokenDescriptor = new SecurityTokenDescriptor()
             //{
             //    Subject = new ClaimsIdentity(claims),
             //    Expires = DateTime.UtcNow.AddDays(1),
             //    SigningCredentials = creds
             //};
-
-
             //var token = tokenHandler.
             //        CreateToken(tokenDescriptor);
-
-
             //return tokenHandler.WriteToken(token);
-
         }
 
         private async Task<List<Claim>> GetClaims(Human applicationUser)
@@ -188,7 +178,14 @@ namespace DeluzionalPenguinz.API.Services
             if (applicationUser.Id is not null)
                 allClaims.Add(new Claim(ClaimTypes.NameIdentifier, applicationUser.Id));
 
-       
+            string humanType = applicationUser.HumanType == HumanType.Professor ? "Professor" : "Student";
+
+            allClaims.Add(new Claim("HumanType", humanType));
+
+
+            allClaims.Add(new Claim("HumanFullName", applicationUser.FirstName+" " + applicationUser.LastName));
+            allClaims.Add(new Claim("HumanUsername", applicationUser.UserName ));
+
 
             var user = await userManager.FindByNameAsync(applicationUser.UserName.ToLower());
 

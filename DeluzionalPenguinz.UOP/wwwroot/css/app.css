@@ -11,6 +11,7 @@
     --purple200: #d7d1df;
     --purple300: #d7cde3;
     --purple400: #d7cae6;
+    
     --purple500: #d6c6ea;
     --purple600: #d6c2ee;
     --purple700: #d6bef2;
@@ -142,9 +143,15 @@
     }
 }
 
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 #app, body, html, .loadingParent {
     width: 100%;
     height: 100%;
+
 }
 
 .loadingParent {
@@ -197,7 +204,7 @@
 
 /* width */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
 }
 
 /* Track */
@@ -231,7 +238,7 @@ input {
 label > p {
     align-self: start;
     margin-bottom: 8px;
-    user-select: none;
+    /*user-select: none;*/
 }
 
 
@@ -249,6 +256,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 6;
     position: relative;
     height: 64px;
     background-color: var(--darkPurple200);
@@ -270,7 +278,83 @@ body {
 .header__title {
     color: var(--blue2100);
     font-size: 32px;
-    user-select: none;
+    /*user-select: none;*/
     margin-left: -64px;
     width: auto;
 }
+
+.ellipsis-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu {
+    position: absolute;
+   
+    top: 16px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+    .menu > img {
+        cursor: pointer;
+        align-self: end;
+        margin-right: 40px;
+    }
+
+    .menu .menuPopup {
+      
+        margin-right: -40px;
+        background: var(--darkPurple2400);
+        margin-top: 16px;
+        opacity: 0;
+        visibility: hidden;
+        width: 320px;
+        will-change: opacity, margin-right;
+        transition: opacity 750ms,margin-right 250ms;
+
+        display: flex;
+        flex-direction: column;
+    }
+   
+
+.human__identity
+{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+
+    .human__identity img
+    {
+
+    }
+
+.menu .menuPopup div {
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    background: var(--darkPurple2400);
+    justify-content: center;
+    align-items: center;
+    color: var(--blue2100);
+    height: 48px;
+    border: 1px solid var(--blue2800);
+}
+    .menu .menuPopup div:hover {
+        background: var(--darkPurple2600);
+    }
+
+    .menu .menuPopup div:nth-of-type(1) {
+        height: 40px;
+        cursor: default;
+        background: var(--darkPurple2500);
+    }
+        .menu .menuPopup div:nth-of-type(1):hover {
+            background: var(--darkPurple2500);
+        }
+

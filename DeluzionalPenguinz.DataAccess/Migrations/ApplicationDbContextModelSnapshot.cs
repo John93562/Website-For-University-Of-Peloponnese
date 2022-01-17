@@ -30,11 +30,17 @@ namespace DeluzionalPenguinz.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ProfessorId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ProfessorSomething")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -42,8 +48,6 @@ namespace DeluzionalPenguinz.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
-
-                    b.HasIndex("ProfessorId");
 
                     b.ToTable("Anouncements");
                 });
@@ -280,13 +284,7 @@ namespace DeluzionalPenguinz.DataAccess.Migrations
                         .WithMany()
                         .HasForeignKey("CourseId");
 
-                    b.HasOne("DeluzionalPenguinz.DataAccess.Models.Human", "Professor")
-                        .WithMany("Anouncements")
-                        .HasForeignKey("ProfessorId");
-
                     b.Navigation("Course");
-
-                    b.Navigation("Professor");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -338,11 +336,6 @@ namespace DeluzionalPenguinz.DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("DeluzionalPenguinz.DataAccess.Models.Human", b =>
-                {
-                    b.Navigation("Anouncements");
                 });
 #pragma warning restore 612, 618
         }

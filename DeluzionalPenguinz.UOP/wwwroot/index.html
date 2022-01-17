@@ -5,32 +5,29 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Ψηφιακά Συστήματα v.DeluzionalPenguinz</title>
-    <link href="css/cssReset.css" rel="stylesheet" />
-    <link rel="shortcut icon" href="del_pengz.ico" />
-    <link href="css/app.css" rel="stylesheet" />
-    <link href="css/Main.css" rel="stylesheet" />
-    <link href="DeluzionalPenguinz.UOP.styles.css" rel="stylesheet" />
-    <link href="manifest.json" rel="manifest" />
-    <link rel="apple-touch-icon" sizes="512x512" href="del_pengz_250x250.png" />
-    <link rel="apple-touch-icon" sizes="192x192" href="del_pengz_250x250.png" />
-    <link href="_content/R" rel="stylesheet" />
+    <base href="/" />
 
-    <base />
+
+    <link rel="shortcut icon" href="deluzionalPenguinz.ico" />
+
+    <link href="css/cssReset.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+    <link href="css/LoginStyle.css" rel="stylesheet" />
+    <link href="css/AnouncementsStyle.css" rel="stylesheet" />
+    <link href="css/EditAnouncementsStyle.css" rel="stylesheet" />
+    <link href="css/SingleAnouncementStyle.css" rel="stylesheet" />
+    <link href="DeluzionalPenguinz.UOP.styles.css" rel="stylesheet" />
+
+
+    <link href="manifest.json" rel="manifest" />
+    <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
+
 
 </head>
 
 <body>
-    <script>
-        var path = window.location.pathname.split('/');
-        var base = document.getElementsByTagName('base')[0];
-        if (window.location.host.includes('localhost')) {
-            base.setAttribute('href', '/');
-        } else if (path.length > 2) {
-            base.setAttribute('href', '/' + path[1] + '/');
-        } else if (path[path.length - 1].length != 0) {
-            window.location.replace(window.location.origin + window.location.pathname + '/' + window.location.search);
-        }
-    </script>
+
     <div id="app">
         <div class="loadingParent">
             <p>Η Πλατφόρμα Ψηφιακών Συστημάτων Σπάρτης Φορτώνει </p>
@@ -42,8 +39,18 @@
         </div>
 
     </div>
-
+    <!--<script src="_framework/blazor.webassembly.js"></script>
+    <script>navigator.serviceWorker.register('service-worker.js');</script>
+    <script type="text/javascript">
+        var cache = CacheStorage;
+        caches.keys().then(function (keyList) {
+            return Promise.all(keyList.map(function (key) {
+                return caches.delete(key);
+            }));
+        });
+    </script>-->
     <script src="_framework/blazor.webassembly.js" autostart="false"></script>
+    <script>navigator.serviceWorker.register('./service-worker.js');</script>
     <script>
         var i = 0;
         var allResourcesBeingLoaded = [];
@@ -76,7 +83,43 @@
             }
         });
     </script>
-    <script>navigator.serviceWorker.register('service-worker.js');</script>
+
+    <script>
+
+        function JSMethod(isvisible) {
+            let menu = document.getElementById("menuPopupId");
+
+            if (isvisible) {
+
+                menu.style.visibility = "visible";
+                menu.style.opacity = "1";
+                menu.style.marginRight = "2px";
+
+                menu.style.zIndex = "1000";
+            }
+            else {
+                menu.style.marginRight = "-40px";
+                menu.style.opacity = "0";
+
+                var delayInMilliseconds = 150;
+                setTimeout(function () {
+                    menu.style.visibility = "hidden";
+                    menu.style.zIndex = "-100";
+
+                }, delayInMilliseconds);
+
+
+            }
+
+
+
+
+        }
+
+
+    </script>
+
+
 </body>
 
 </html>

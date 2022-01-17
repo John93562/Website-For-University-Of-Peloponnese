@@ -32,7 +32,7 @@ namespace DeluzionalPenguinz.DataAccess.Services
 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
             }
@@ -95,9 +95,13 @@ namespace DeluzionalPenguinz.DataAccess.Services
             using (ApplicationDbContext context = new ApplicationDbContext(dbContextOptions))
             {
                 IEnumerable<Anouncement> entities = await context.Anouncements
-                    .ToListAsync();
+                                       .Include(e => e.Course)
+                                   .ToListAsync();
 
                 return entities;
+
+
+
             }
         }
 
@@ -108,6 +112,7 @@ namespace DeluzionalPenguinz.DataAccess.Services
             using (ApplicationDbContext context = new ApplicationDbContext(dbContextOptions))
             {
                 Anouncement entity = await context.Anouncements
+                        .Include(e => e.Course)
                     .FirstOrDefaultAsync(e => e.Id == Id);
 
                 return entity;
@@ -118,4 +123,5 @@ namespace DeluzionalPenguinz.DataAccess.Services
 
 
     }
+
 }

@@ -22,8 +22,12 @@ namespace DeluzionalPenguinz.Models.Identity
             AM = aM;
             HumanType = humanType;
             Anouncements = anouncements;
-        }
 
+
+            FullName = FirstName + " " + LastName;
+
+        }
+        public string FullName { get; set; }
         public string Id { get; set; }
         public string Username { get; set; }
         public string? FirstName { get; set; }

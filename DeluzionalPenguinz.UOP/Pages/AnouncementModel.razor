@@ -1,0 +1,146 @@
+﻿@page "/Anouncement/{Id:int}/{Title}/{Edit:bool?}"
+@page "/Anouncement/{Create:bool}"
+
+@inject AnouncementsService AnouncementsService
+
+
+
+@if (isLoading)
+{
+    <div class="ellipsis-container">
+        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+    </div>
+}
+
+
+@if (Create.HasValue == false && Edit.HasValue == false)
+{
+
+
+    <div class="anouncement__header">
+        <div class="backBtn" @onclick="NavigateToAllAnouncements">
+            <img src="images/back.png" width="6" height="12" />
+            <p>Πίσω</p>
+        </div>
+        <div class="anouncement__title__container">
+
+            <p class="anouncement__title">@Anouncement?.Title</p>
+            @if (CanEdit)
+            {
+                <img src="images/edit.png" @onclick="EditPost" width="24" height="24" />
+            }
+        </div>
+
+
+        <div class="anouncement__more-info">
+            <div class="info">
+                <p>Καθηγητής</p>
+                <p>@Anouncement?.Professor?.FullName</p>
+            </div>
+
+            <div class="info">
+                <p>Μάθημα</p>
+                <p>@Anouncement?.Course?.Name</p>
+            </div>
+
+            <p class="anouncement__date">@Anouncement?.Date.ToString("G")</p>
+        </div>
+
+    </div>
+
+    <div class="anouncement__body">
+        <textarea readonly>@Anouncement?.Body</textarea>
+
+    </div>
+}
+else if (Create.HasValue == true)
+{
+    <EditForm Model="AnouncementToCreate" OnValidSubmit="HandleAnouncementCreate">
+
+
+        <div class="anouncement__header">
+            <div class="backBtn" @onclick="NavigateToAllAnouncements">
+                <img src="images/back.png" width="6" height="12" />
+                <p>Πίσω</p>
+            </div>
+            <div class="title__update-container">
+
+
+                <p>Τίτλος</p>
+                <InputText class="title__update" @bind-Value="AnouncementToCreate.Title" />
+
+            </div>
+            <div class="anouncement__more-info__update">
+                <div class="info">
+                    <p>Καθηγητής</p>
+                    <p>@AnouncementToCreate?.HumanName</p>
+                </div>
+
+
+                <p class="anouncement__date">@Anouncement?.Date.ToString("G")</p>
+            </div>
+
+        </div>
+
+        <div class="anouncement__body__update">
+            <div class="title__update-container">
+
+                <p>Μάθημα</p>
+                <InputText class="course__update" @bind-Value="AnouncementToCreate.CourseName" />
+
+            </div>
+            <div class="title__update-container bodyContainer">
+
+                <p>Περιεχόμενο</p>
+                <InputTextArea  rows="15" @bind-Value="AnouncementToCreate.Body" />
+            </div>
+
+        </div>
+        <button class="submitBtnForUpdate" type="submit">Submit</button>
+
+    </EditForm>
+}
+else if (Edit.HasValue)
+{
+    <EditForm Model="AnouncementToUpdate" OnValidSubmit="HandleAnouncementUpdate">
+
+
+        <div class="anouncement__header">
+            <div class="backBtn" @onclick="NavigateToAllAnouncements">
+                <img src="images/back.png" width="6" height="12" />
+                <p>Πίσω</p>
+            </div>
+            <div class="title__update-container">
+
+
+                <p>Τίτλος</p>
+
+                <InputText class="title__update" @bind-Value="AnouncementToUpdate.Title" />
+            </div>
+            <div class="anouncement__more-info__update">
+                <div class="info">
+                    <p>Καθηγητής</p>
+                    <p>@AnouncementToUpdate?.HumanName</p>
+                </div>
+
+
+
+                <p class="anouncement__date">@Anouncement?.Date.ToString("G")</p>
+            </div>
+
+        </div>
+
+        <div class="anouncement__body__update">
+            <div class="title__update-container">
+                <p>Μάθημα</p>
+                <InputText class="course__update" @bind-Value="AnouncementToUpdate.CourseName" />
+            </div>
+            <div class="title__update-container bodyContainer">
+                <p>Περιεχόμενο</p>
+                <InputTextArea rows="15" @bind-Value="AnouncementToUpdate.Body" />
+            </div>
+        </div>
+        <button class="submitBtnForUpdate" type="submit">Επιβεβαίωση</button>
+
+    </EditForm>
+}

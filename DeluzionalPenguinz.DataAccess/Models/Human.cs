@@ -14,19 +14,17 @@ namespace DeluzionalPenguinz.DataAccess.Models
         {
 
         }
-        public Human(string? firstName, string? lastName, string? aM,string?userName, HumanType humanType, ICollection<Anouncement>? anouncements)
+        public Human(string? firstName, string? lastName, string? aM,string?userName, HumanType humanType)
         {
             FirstName = firstName;
             LastName = lastName;
             AM = aM;
             HumanType = humanType;
-            Anouncements = anouncements;
             this.UserName = userName;
         }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? AM { get; set; }
         public HumanType HumanType { get; set; }
-        public ICollection<Anouncement>? Anouncements { get; set; }
     }
 }

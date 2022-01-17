@@ -23,12 +23,17 @@ namespace DeluzionalPenguinz.UOP.Pages
         bool isWhoIsItFrameVisible { get; set; } = true;
         bool isUserInfoFrameVisible { get; set; }
         bool isPasswordFrameVisible { get; set; }
+        bool LoginFailed { get; set; }
+        bool RegisterFailed { get; set; }
+
+        bool IsLoading { get; set; }
+        bool RegisterSucceed { get; set; }
 
         void GoToNextFrame()
         {
 
-       
-                if (isWhoIsItFrameVisible)
+
+            if (isWhoIsItFrameVisible)
             {
                 isWhoIsItFrameVisible = false;
                 isPasswordFrameVisible = false;
@@ -55,11 +60,11 @@ namespace DeluzionalPenguinz.UOP.Pages
                 isUserInfoFrameActive = "";
                 isPasswordFrameActive = "active-registration";
             }
-         
+
         }
         void GoToPreviousFrame()
         {
-           
+
             if (isPasswordFrameVisible)
             {
                 isWhoIsItFrameVisible = false;
@@ -93,15 +98,33 @@ namespace DeluzionalPenguinz.UOP.Pages
             UserToRegister = new UserRegister();
         }
 
-        void DoNothing()
-        {
 
-        }
         public async Task HandleLogin()
         {
-            var response = await AuthenticationService.Login(UserToLogin);
+            IsLoading = true;
+            JwtResponse jwtResponse = null;
+            try
+            {
+                jwtResponse = await AuthenticationService.Login(UserToLogin);
+            }
+            catch (Exception ex)
+            {
 
-            if (response is not null && !string.IsNullOrEmpty(response.Token))
+                LoginFailed = true;
+                IsLoading = false;
+                return;
+
+            }
+            if (jwtResponse is null || string.IsNullOrEmpty(jwtResponse.Token))
+            {
+                LoginFailed = true;
+                IsLoading = false;
+                return;
+            }
+
+
+            IsLoading = false;
+            if (jwtResponse is not null && !string.IsNullOrEmpty(jwtResponse.Token))
                 NavigationManager.NavigateTo("/AllAnouncements");
         }
 
@@ -109,30 +132,59 @@ namespace DeluzionalPenguinz.UOP.Pages
         {
             if (!isPasswordFrameVisible)
                 return;
+
+            IsLoading = true;
             if (editContext != null && editContext.Validate())
             {
                 var response = await AuthenticationService.Register(UserToRegister);
+
+                if (response is not null)
+                {
+                    RegisterSucceed = true;
+                    UserToLogin = new UserLogin();
+                    UserToLogin.Username = UserToRegister.Username;
+                    UserToRegister = new UserRegister();
+                    rotatedClass = "";
+                    IsLoading = false;
+
+                }
+                else
+                {
+                    RegisterFailed = true;
+                    isWhoIsItFrameActive = "active-registration";
+                    isPasswordFrameActive = "";
+                    isUserInfoFrameActive = "";
+                    isPasswordFrameVisible = false;
+                    isUserInfoFrameVisible = false;
+                    isWhoIsItFrameVisible = true;
+                    IsLoading = false;
+                }
             }
             else
             {
+                RegisterFailed = true;
                 isWhoIsItFrameActive = "active-registration";
                 isPasswordFrameActive = "";
                 isUserInfoFrameActive = "";
                 isPasswordFrameVisible = false;
                 isUserInfoFrameVisible = false;
                 isWhoIsItFrameVisible = true;
-             
+                IsLoading = false;
+
             }
         }
         void Rotate()
         {
             bool rotatedIsAlreadyOn = rotatedClass == "rotated";
 
-            if (rotatedIsAlreadyOn)
-                rotatedClass = "";
-            else
-                rotatedClass = "rotated";
+            rotatedClass = rotatedIsAlreadyOn ? "" : "rotated";
 
+
+
+
+            LoginFailed = false;
+            RegisterFailed = false;
+            RegisterSucceed = false;
         }
         private EditContext? editContext;
 

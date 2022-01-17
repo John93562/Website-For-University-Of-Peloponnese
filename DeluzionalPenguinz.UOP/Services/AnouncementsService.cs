@@ -12,7 +12,13 @@ namespace DeluzionalPenguinz.UOP.Services
             this.httpClient = httpClient;
         }
 
-        public async Task<bool> UpdateAnouncement(AnouncementDTO anouncement)
+        public async Task<AnouncementDTO> GetSingleAnouncement(int id)
+        {
+          return await httpClient.GetFromJsonAsync<AnouncementDTO>($"api/Anouncements/GetSingleAnouncement/{id}");
+
+        }
+
+        public async Task<bool> UpdateAnouncement(UpdateAnouncementResponse anouncement)
         {
             var result = await httpClient.PutAsJsonAsync("api/Anouncements/UpdateAnAnouncement", anouncement);
 
@@ -22,8 +28,9 @@ namespace DeluzionalPenguinz.UOP.Services
 
             return response.Success;
         }
-        public async Task<bool> AddAnouncement(AnouncementDTO anouncement)
+        public async Task<bool> AddAnouncement(CreateNewAnouncementResponse anouncement)
         {
+
             var result = await httpClient.PostAsJsonAsync("api/Anouncements/AddNewAnouncement", anouncement);
 
             result.EnsureSuccessStatusCode();

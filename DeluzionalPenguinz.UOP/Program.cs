@@ -21,14 +21,13 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore();
 
-//builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://api.deluzionalpenguinz.com/") });
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7199/") });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://api.deluzionalpenguinz.com/") });
+//builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7199/") });
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<AnouncementsService>();
 
 builder.Services.AddBlazoredLocalStorage();
-
 
 
 await builder.Build().RunAsync();

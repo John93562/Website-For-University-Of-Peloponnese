@@ -1,9 +1,89 @@
 ﻿@page "/AllAnouncements"
+@using DeluzionalPenguinz.UOP.Services
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject AnouncementsService AnouncementsService;
 
 
-<AuthorizeView>
-    <Authorized>
-        <h1>Hello Anoucements!</h1>
+<div class="container-AllAnouncements">
+    <div class="filter-bar">
+        <div class="filter-header">
+            <p id="filters__AllAnouncements">Φίλτρα</p>
+            <img src="images/filters.png" width="16" height="16" />
 
-    </Authorized>
-</AuthorizeView>
+        </div>
+        <div class="filter">
+            <p>Καθηγητής</p>
+            <select class="options__AllAnouncements" @bind="SelectedTeacherName">
+                <option value="Όλοι οι Καθηγητές">Όλοι οι Καθηγητές</option>
+                @foreach (string professor in AllProfessorNames)
+                {
+                    <option value="@professor">@professor</option>
+                }
+            </select>
+        </div>
+        <div class="filter">
+            <p>Μάθημα</p>
+            <select class="options__AllAnouncements" @bind="SelectedCourseName">
+                <option value="Όλα τα Μαθήματα">Όλα τα Μαθήματα</option>
+                @foreach (string course in AllCoursesNames)
+                {
+                    <option value="@course">@course</option>
+                }
+
+
+            </select>
+        </div>
+    </div>
+
+
+    <div class="anouncementsMain">
+        <div class="header__AllAnouncements">
+            <p id="title__AllAnouncements">Ανακοινώσεις</p>
+        </div>
+
+
+        <div class="main-content">
+            @if (isLoading)
+            {
+                <div class="ellipsis-container">
+
+
+                    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                </div>
+            }
+            @foreach (AnouncementDTO anouncement in AllAnouncementsModelsFiltered)
+            {
+                <div class="anouncement" @onclick="()=> NavigateToAnouncement(anouncement.Id,anouncement.Title)">
+
+                    <div class="anouncementTitle">
+                        <p>@anouncement.Title</p>
+                        <p>@anouncement.Course.Name</p>
+                    </div>
+
+
+                    <div class="anouncementBody">
+                        @if (anouncement.Body.Length > 200)
+                        {
+                            <p>@anouncement.Body.Substring(0,200)...</p>
+                        }
+                        else
+                        {
+                            <p>@anouncement.Body</p>
+                        }
+                        <div>
+                            <p>@anouncement.Professor.FullName</p>
+                            <p>@anouncement.Date.ToString("G")</p>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+
+    </div>
+</div>
+
+<Target Name="PublishServiceWorker" AfterTargets="CopyFilesToPublishDirectory">
+    <WriteLinesToFile File="$(PublishDir)wwwroot\service-worker.js" Lines="/* $([System.Guid]::NewGuid()) */" />
+</Target>
