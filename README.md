@@ -2,7 +2,7 @@
 
 
 
-Website Created for University Of Peloponese, Greece.                                           
+Website Created for University Of Peloponnese, Greece.                                           
 Using Asp.net Web API, Blazor WebAssembly.
 
 ![website](https://user-images.githubusercontent.com/63431776/149805726-08674d3f-a401-4c0f-9ad2-e114edb4396a.PNG)
