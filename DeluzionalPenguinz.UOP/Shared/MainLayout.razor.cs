@@ -46,7 +46,7 @@ namespace DeluzionalPenguinz.UOP.Shared
             await CallJSMethod(false);
             await LocalStorage.RemoveItemAsync("Token");
             await AuthStateProvider.GetAuthenticationStateAsync();
-            NavigationManager.NavigateTo("/AllAnouncements");
+            NavigationManager.NavigateTo("/");
         }
 
         public void AuthorizeBasedIfItIsTheProfessor(HumanType humanType, string humanFullName)

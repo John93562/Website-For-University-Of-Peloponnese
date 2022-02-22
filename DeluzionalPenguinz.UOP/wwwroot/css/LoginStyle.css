@@ -19,6 +19,10 @@
         line-height: 16px;
         text-align: center;
     }
+
+
+
+
 .login-box label {
     display: flex;
     flex-direction: column;
@@ -242,6 +246,7 @@ select:focus
     transition: transform 0.5s;
     transform-style: preserve-3d;
 }
+
 
 .card.rotated .card_content {
     transform: rotateY( 180deg );

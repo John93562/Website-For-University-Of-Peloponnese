@@ -56,8 +56,8 @@ builder.Services.AddCors(
               options => options.AddPolicy("DeluzionalPenguinz", builder =>
               {
                   //builder.SetIsOriginAllowed(e => e == "https://deluzionalpenguinz.com").AllowAnyMethod().AllowAnyHeader();
-                  builder.WithOrigins("deluzionalpenguinz.com", "https://deluzionalpenguinz.com", "https://deluzionalpenguinz.com/").AllowAnyMethod().AllowAnyHeader();
-                  //builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                  //builder.WithOrigins("deluzionalpenguinz.com", "https://deluzionalpenguinz.com", "https://deluzionalpenguinz.com/").AllowAnyMethod().AllowAnyHeader();
+                  builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
               }));
 
 

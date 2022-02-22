@@ -1,4 +1,5 @@
 ﻿using DeluzionalPenguinz.Models.Identity;
+using DeluzionalPenguinz.UOP.StaticResources;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 
@@ -55,6 +56,32 @@ namespace DeluzionalPenguinz.UOP.Pages
             AnouncementToUpdate = new UpdateAnouncementResponse(Anouncement.Id, Anouncement.Professor.Username, Anouncement.Professor.FullName, Anouncement.Title, Anouncement.Body, Anouncement.Course.Name);
         }
         string username { get; set; }
+
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            isLoading = true;
+            var result = await AuthenticationState;
+            HumanType humanType = HumanType.Student;
+
+
+            if (result.User is null || result.User.Identity is null || !result.User.Identity.IsAuthenticated)
+                NavigationManager.NavigateTo("/");
+
+            string HumanTypeValue = result.User.Claims.FirstOrDefault(e => e.Type == "HumanType")?.Value;
+
+            string HumanName = result.User.Claims.FirstOrDefault(e => e.Type == "HumanFullName")?.Value;
+
+            if (string.IsNullOrEmpty(HumanTypeValue))
+                return;
+
+            if (HumanTypeValue == "Professor")
+                humanType = HumanType.Professor;
+
+            ApplicationStaticResources.InvokeActionAfterAuthorization(humanType, HumanName);
+        }
+
+
         protected override async Task OnParametersSetAsync()
         {
             isLoading = true;

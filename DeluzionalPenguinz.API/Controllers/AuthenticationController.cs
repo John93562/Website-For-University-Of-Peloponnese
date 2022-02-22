@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 namespace DeluzionalPenguinz.API.Controllers
 {
     [Route("api/[controller]/[action]")]
-    [EnableCors("DeluzionalPenguinz")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {

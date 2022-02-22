@@ -20,7 +20,7 @@ namespace DeluzionalPenguinz.UOP.Services
 
         public async Task<bool> UpdateAnouncement(UpdateAnouncementResponse anouncement)
         {
-            var result = await httpClient.PutAsJsonAsync("api/Anouncements/UpdateAnAnouncement", anouncement);
+            var result = await httpClient.PostAsJsonAsync("api/Anouncements/UpdateAnAnouncement", anouncement);
 
             result.EnsureSuccessStatusCode();
 
@@ -41,7 +41,7 @@ namespace DeluzionalPenguinz.UOP.Services
         }
         public async Task<bool> DeleteAnouncement(int anouncementId)
         {
-            var result = await httpClient.DeleteAsync($"api/Anouncements/DeleteAnouncement/{anouncementId}");
+            var result = await httpClient.PostAsJsonAsync($"api/Anouncements/DeleteAnouncement",new IdResponse(anouncementId));
 
             result.EnsureSuccessStatusCode();
 

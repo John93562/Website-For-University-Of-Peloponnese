@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace DeluzionalPenguinz.API.Controllers
 {
     [Route("api/[controller]/[action]")]
-    [EnableCors("DeluzionalPenguinz")]
     [Authorize]
     [ApiController]
     public class AnouncementsController : ControllerBase
@@ -41,17 +40,17 @@ namespace DeluzionalPenguinz.API.Controllers
 
             return response is null ? BadRequest() : Ok(response);
         }
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> UpdateAnAnouncement([FromBody] UpdateAnouncementResponse anouncement)
         {
             BooleanResponse response = await anouncementsDataService.UpdateAnAnouncement(anouncement);
 
             return response is null ? BadRequest() : Ok(response);
         }
-        [HttpDelete("{id:int}")]
-        public async Task<IActionResult> DeleteAnouncement(int id)
+        [HttpPost]
+        public async Task<IActionResult> DeleteAnouncement([FromBody] IdResponse id)
         {
-            BooleanResponse response = await anouncementsDataService.DeleteAnAnouncement(id);
+            BooleanResponse response = await anouncementsDataService.DeleteAnAnouncement(id.Id);
 
             return response is null ? BadRequest() : Ok(response);
         }

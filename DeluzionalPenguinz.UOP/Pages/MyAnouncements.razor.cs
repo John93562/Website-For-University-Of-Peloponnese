@@ -22,6 +22,28 @@ namespace DeluzionalPenguinz.UOP.Pages
         {
             NavigationManager.NavigateTo($"/Anouncement/true");
         }
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            isLoading = true;
+            var result = await AuthenticationState;
+            HumanType humanType = HumanType.Student;
+
+
+            if (result.User is null || result.User.Identity is null || !result.User.Identity.IsAuthenticated)
+                NavigationManager.NavigateTo("/");
+
+            string HumanTypeValue = result.User.Claims.FirstOrDefault(e => e.Type == "HumanType")?.Value;
+
+            string HumanName = result.User.Claims.FirstOrDefault(e => e.Type == "HumanFullName")?.Value;
+
+            if (string.IsNullOrEmpty(HumanTypeValue))
+                return;
+
+            if (HumanTypeValue == "Professor")
+                humanType = HumanType.Professor;
+
+            ApplicationStaticResources.InvokeActionAfterAuthorization(humanType, HumanName);
+        }
         protected override async Task OnInitializedAsync()
         {
             isLoading = true;
